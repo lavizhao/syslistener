@@ -54,3 +54,31 @@ class log_analyzer:
             print("error in detect type")
             return None
             
+
+    #返回log的sql语句
+    def get_insert_string(self,log,ip,port):
+        tlog = self.get_log(log)
+
+        #得到log的dict
+        logd = tlog.logd
+
+        #得到log的table name
+        tbl_name = self.get_log_type_string(log)+"_tbl"
+
+        key_string,value_string = "",""
+        for k in logd:
+            v = logd[k]
+            
+            ks = "%s,"%(k)
+            
+            if k != 'virus_size' or k!='severity':
+                vs = "\'%s\',"%(v)
+            else :
+                vs = "%s,"%(v)
+
+            key_string += ks
+            value_string += vs
+
+        sql = 'insert into %s(%s,router_ip,router_port) values(%s,\'%s\',\'%s\')'%(tbl_name,key_string[:-1],value_string[:-1],ip,port)
+            
+        return sql

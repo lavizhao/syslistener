@@ -7,6 +7,7 @@ import syslistener
 
 from syslistener.listener import listener
 from syslistener.loginfo import Syslogd,Superfw,Viruslog
+from syslistener.db import mydb
 
 sent1 = "<3>syslogd: 2014-12-10 16:23:38 0x0000000000000000 SC3809889426 superfw: pam_sm_setcred"
 
@@ -20,43 +21,28 @@ sent5 = "<2>viruslog: 2014-12-10 16:24:03 0x0103000000000000 SV1313060137 Trojan
 
 sent6 = "<2>viruslog: 2014-12-10 16:24:03 0x0103000000000000 1313060137 Trojan.Win32.Generic.14B62827 木马 中 未知传毒单位名 111.161.66.157 80 hit 192.168.140.83 59389 http GET&nbsp;http://www.qm123.com.cn/shuazhuaqi.rar<--http://down.zdnet.com.cn/link/43/426146.shtml 338762 "
 
+db = mydb()
+def main(s = 1):
+    if s == 1:
+        db.drop_db()
+    elif s == 2:
+        db.create_db()
+        db.create_tbls()
+    else:
+        addr,port = '192.168.140.82','33598'
+        db.insert_tbls(sent1,addr,port)
+        db.insert_tbls(sent2,addr,port)
+        db.insert_tbls(sent3,addr,port)
+        db.insert_tbls(sent4,addr,port)
+        db.insert_tbls(sent5,addr,port)
+        db.insert_tbls(sent6,addr,port)
+    
+
 if __name__ == '__main__':
 
-    a1 = Syslogd(sent1)
-    a1.print()
 
-    print(100*"=")
+    main(1)
+    main(2)
 
-    a2 = Syslogd(sent2)
-    a2.print()
 
-    print(100*"=")
 
-    a3 = Superfw(sent3)
-    a3.print()
-
-    print(100*"=")
-
-    a4 = Superfw(sent4)
-    a4.print()
-
-    print(100*"=")
-
-    a5 = Viruslog(sent5)
-    a5.print()
-
-    print(100*"=")
-
-    a6 = Viruslog(sent6)
-    a6.print()
-
-    print(100*"=")
-
-    print("得到所有列名")
-    dict1 = a1.logd
-    dict2 = a3.logd
-    dict3 = a5.logd
-    
-    print(dict1.keys())
-    print(dict2.keys())
-    print(dict3.keys())

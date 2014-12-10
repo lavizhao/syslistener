@@ -7,6 +7,7 @@ __pycache__/
 
 *~
 *.txt
+conf/db.conf
 
 # Distribution / packaging
 .Python

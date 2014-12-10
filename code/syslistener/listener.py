@@ -13,6 +13,9 @@ from .analyzer import log_analyzer
 
 logana = log_analyzer()
 
+from .db import mydb
+dba = mydb()
+
 #侦听器
 class listener:
     
@@ -60,6 +63,7 @@ class listener:
                     print("log种类: %s"%(logana.get_log_type_string(data)))
                     loginfo = logana.get_log(data)
                     loginfo.print()
+                    dba.insert_tbls(data,ip,port)
                     print(100*"=")
                 
             indx += 1

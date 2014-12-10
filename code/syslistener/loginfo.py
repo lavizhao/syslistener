@@ -11,7 +11,7 @@ class loginfo(metaclass=ABCMeta):
     #这个存起来的目的是因为挂了可以很方便的调试
     def __init__(self,log_sentence):
         self.__log_orign = log_sentence
-
+        
 
     #一下是get类函数
 
@@ -41,6 +41,7 @@ class Syslogd(loginfo):
         self.__description = logd['description']
 
         self.logd = logd
+        self.logd['orign'] = self.get_log_orign()
 
     def analyze(self,logsent):
         result = {}
@@ -100,7 +101,7 @@ class Superfw(loginfo):
         self.__operate_content = logd['operate_content']
 
         self.logd = logd
-
+        self.logd['orign'] = self.get_log_orign()
 
     def analyze(self,logsent):
         result = {}
@@ -168,9 +169,11 @@ class Viruslog(loginfo):
         self.__virus_name = logd['virus_name']
         self.__threat_type = logd['threat_type']
         self.__danger_type = logd['danger_type']
+        
         self.__spread_virus_device_name = logd['spread_virus_device_name']
-        self.__spread_virus_ip = logd['spread_virus_ip']
-        self.__spread_virus_port = logd['spread_virus_port']
+        self.__spread_virus_device_ip = logd['spread_virus_device_ip']
+        self.__spread_virus_device_port = logd['spread_virus_device_port']
+        
         self.__get_virus_device_name = logd['get_virus_device_name']
         self.__get_virus_device_ip = logd['get_virus_device_ip']
         self.__get_virus_device_port = logd['get_virus_device_port']
@@ -179,7 +182,8 @@ class Viruslog(loginfo):
         self.__virus_size = logd['virus_size']
 
         self.logd = logd
-
+        self.logd['orign'] = self.get_log_orign()
+        
     def analyze(self,logsent):
         result = {}
         
@@ -211,10 +215,10 @@ class Viruslog(loginfo):
         result['spread_virus_device_name'] = tlog[8]
 
         #获得传毒ip
-        result['spread_virus_ip'] = tlog[9]
+        result['spread_virus_device_ip'] = tlog[9]
 
         #获得传毒端口
-        result['spread_virus_port'] = tlog[10]
+        result['spread_virus_device_port'] = tlog[10]
 
         #获得受毒单位名
         result['get_virus_device_name'] = tlog[11]
@@ -246,13 +250,16 @@ class Viruslog(loginfo):
         print("病毒名称 : %s"%(self.__virus_name))
         print("威胁类别 : %s"%(self.__threat_type))
         print("危险类别 : %s"%(self.__danger_type))
+        
         print("传毒单位名 : %s"%(self.__spread_virus_device_name))
-        print("传毒ip : %s"%(self.__spread_virus_ip))
-        print("传毒端口 : %s"%(self.__spread_virus_port))
+        print("传毒ip : %s"%(self.__spread_virus_device_ip))
+        print("传毒端口 : %s"%(self.__spread_virus_device_port))
+        
         print("受毒单位名 : %s"%(self.__get_virus_device_name))
         print("受毒ip : %s"%(self.__get_virus_device_ip))
         print("受毒端口 : %s"%(self.__get_virus_device_port))
         print("受毒协议 : %s"%(self.__get_virus_device_protocol))
+        
         print("传毒信息 : %s"%(self.__virus_info))
         print("文件大小 : %s"%(self.__virus_size))
 
