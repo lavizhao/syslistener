@@ -32,9 +32,9 @@ class mydb:
 
     #三个sql,建表
     def create_tbls(self):    
-        sql1 = 'create table syslogd_tbl(severity int,time datetime,node_id varchar(200),device_id varchar(200),description varchar(30000),orign varchar(4000),router_ip varchar(200),router_port varchar(200))'
-        sql2 = 'create table superfw_tbl(severity int,time datetime,node_id varchar(200),device_id varchar(200),usr_name varchar(200),system_device_id varchar(200),permission varchar(200),login_type varchar(200), login_ip varchar(200), operate_content varchar(1000),orign varchar(4000),router_ip varchar(200),router_port varchar(200))'
-        sql3 = 'create table viruslog_tbl(severity int, time datetime,node_id varchar(200), device_id varchar(200), virus_name varchar(300), threat_type varchar(200), danger_type varchar(200), spread_virus_device_name varchar(200), spread_virus_device_ip varchar(200), spread_virus_device_port varchar(200), get_virus_device_name varchar(200), get_virus_device_ip varchar(200), get_virus_device_port varchar(200), get_virus_device_protocol varchar(200), virus_size int,virus_info varchar(3000),orign varchar(4000),router_ip varchar(200),router_port varchar(200))'
+        sql1 = 'create table syslogd_tbl(indx int PRIMARY KEY  AUTO_INCREMENT,severity int,time datetime,node_id varchar(200),device_id varchar(200),description varchar(30000),orign varchar(4000),router_ip varchar(200),router_port varchar(200))'
+        sql2 = 'create table superfw_tbl(indx int PRIMARY KEY  AUTO_INCREMENT,severity int,time datetime,node_id varchar(200),device_id varchar(200),usr_name varchar(200),system_device_id varchar(200),permission varchar(200),login_type varchar(200), login_ip varchar(200), operate_content varchar(1000),orign varchar(4000),router_ip varchar(200),router_port varchar(200))'
+        sql3 = 'create table viruslog_tbl(indx int PRIMARY KEY  AUTO_INCREMENT,severity int, time datetime,node_id varchar(200), device_id varchar(200), virus_name varchar(300), threat_type varchar(200), danger_type varchar(200), spread_virus_device_name varchar(200), spread_virus_device_ip varchar(200), spread_virus_device_port varchar(200), get_virus_device_name varchar(200), get_virus_device_ip varchar(200), get_virus_device_port varchar(200), get_virus_device_protocol varchar(200), virus_size int,virus_info varchar(3000),orign varchar(4000),router_ip varchar(200),router_port varchar(200))'
 
         cur = self.conn.cursor()
         cur.execute('use syslistener;')
